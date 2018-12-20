@@ -30,7 +30,7 @@ class Item(object):
             Game.collectedTreasures++
             print("item!")
             
-def paint(Graphics2D g):
-        ImageIcon picture = new ImageIcon(src)
-        Image MyCharacter = picture.getImage()
-        g.drawImage(MyCharacter, x, y, width, height, null)
+    def paint(Graphics2D g):
+            ImageIcon picture = new ImageIcon(src)
+            Image MyCharacter = picture.getImage()
+            g.drawImage(MyCharacter, x, y, width, height, null)
