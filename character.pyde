@@ -1,25 +1,25 @@
 class Character(object):
-  xkey = false
-  ykey = false
+  xkey = False
+  ykey = False
   xdir = ""
   ydir = ""
-  up = true
-  down = true
-  left = true
-  right = true
-  leftpressed = false
-  rightpressed = false
-  uppressed = false
-  downpressed = false
-  moving = true
-  attack = false
+  up = True
+  down = True
+  left = True
+  right = True
+  leftpressed = False
+  rightpressed = False
+  uppressed = False
+  downpressed = False
+  moving = True
+  attack = False
   attackDir = ""
   speedX = 0
   speedY = 0
   counter = 0
   attackcounter = 0
   lastDir = "up"
-  bigTreasure = false
+  bigTreasure = False
   health = 10
   invincible = 0
   attackposition = 1
@@ -38,10 +38,10 @@ class Character(object):
 
   def move(self):
     if ((self.x - 2 >= 0 and speedX < 0) or (self.x + self.width + 2 <= 512 and speedX > 0)):
-      if ((left == true and xdir == "left") or (right == true and xdir == "right")):
+      if ((left == True and xdir == "left") or (right == True and xdir == "right")):
         self.x += speedX
     if ((self.y - 2 >= 0 and speedY < 0) or (self.y + self.height + 2 <= Game.frameheight and speedY > 0)) :
-      if ((up == true and ydir == "up") or (down == true and ydir == "down")) :
+      if ((up == True and ydir == "up") or (down == True and ydir == "down")) :
         self.y += speedY
       
     
@@ -51,7 +51,7 @@ class Character(object):
     if (self.type == "character") :
       if (self.invincible % 10 > 7) :
         self.src = "yellow.png"
-      elif (Game.weapon.attack == true) :
+      elif (Game.weapon.attack == True) :
         if (attackDir == "up") :
           if (Game.animationcounter <= 10) :
             self.src = "toraupattack1.png"
@@ -127,20 +127,20 @@ class Character(object):
           elif (Game.animationcounter <= 20) :
             self.src = "toraright2.png"
 
-  def loseHealth(int healthAmount, int invincibleAmount):
+  def loseHealth(healthAmount, invincibleAmount):
     if (self.invincible == 0):
       self.health -= healthAmount
       self.invincible += invincibleAmount
       if (!Game.collectedTreasure.isEmpty()):
         Game.collectedTreasure.remove(Game.collectedTreasure.size() - 1)
-        Game.collectedTreasures--
-      elif (Game.tora.bigTreasure == true):
+        Game.collectedTreasures-=1
+      elif (Game.tora.bigTreasure == True):
         Game.bigChest.src = ""
 
   def update():
     if (self.invincible > 0):
       self.invincible-=1
-    if (Game.weapon.attack == true):
+    if (Game.weapon.attack == True):
       attackcounter += attackposition
       if (attackcounter == 15):
         attackposition = -1
@@ -162,7 +162,7 @@ class Character(object):
         Game.weapon.y = Game.tora.y + Game.tora.height / 2 - Game.weapon.height / 2
         
       if (((attackDir == "up" or attackDir == "down") and Game.weapon.y == Game.tora.y) or ((attackDir == "left" or attackDir == "right") and Game.weapon.x == Game.tora.x)):
-        Game.weapon.attack = false
+        Game.weapon.attack = False
         attackcounter = 0
         attackposition = 1
         Game.weapon.src = ""
@@ -172,7 +172,7 @@ class Character(object):
 
     if (self.y + self.height > Game.frameheight):
       self.y = Game.frameheight - self.height
-    if (self.y < 0 and moving == true):
+    if (self.y < 0 and moving == True):
       self.y = 0
     if (horizontalqueue.isEmpty()):
       speedX = 0
@@ -193,7 +193,7 @@ class Character(object):
     if ((speedX == 0 and speedY == 0) or (counter == 22)):
       counter = 0
     else:
-      counter++
+      counter+=1
 
     # System.out.println(horizontalqueue)
     # System.out.println(verticalqueue)
@@ -202,67 +202,67 @@ class Character(object):
   def paint(self):
     image(self.src,self.x,self.y,self.width,self.height)
 
-  def keyReleased(KeyEvent e):
+  def keyReleased(e):
     if (e.keyCode == 'a'):
-      xkey = false
+      xkey = False
       directionqueue.remove("left")
       horizontalqueue.remove("left")
-      leftpressed = false
+      leftpressed = False
       lastDir = "left"
       
     if (e.keyCode == 'd'):
-      xkey = false
+      xkey = False
       directionqueue.remove("right")
       horizontalqueue.remove("right")
-      rightpressed = false
+      rightpressed = False
       lastDir = "right"
       
     if (e.keyCode == 'w'):
-      ykey = false
+      ykey = False
       directionqueue.remove("up")
       verticalqueue.remove("up")
-      uppressed = false
+      uppressed = False
       lastDir = "up"
       
     if (e.keyCode == 's'):
-      ykey = false
+      ykey = False
       directionqueue.remove("down")
       verticalqueue.remove("down")
-      downpressed = false
+      downpressed = False
       lastDir = "down"
 
-  def keyPressed(KeyEvent e):
-    if (self.moving == true):
-      if (keyCode == 'a' and left == true and leftpressed == false):
+  def keyPressed(e):
+    if (self.moving == True):
+      if (keyCode == 'a' and left == True and leftpressed == False):
         directionqueue.insert(0, "left")
-        xkey = true
+        xkey = True
         horizontalqueue.insert(0, "left")
         xdir = "left"
-        leftpressed = true
+        leftpressed = True
         
-      if (keyCode == 'd' and right == true and rightpressed == false):
+      if (keyCode == 'd' and right == True and rightpressed == False):
         directionqueue.insert(0, "right")
         horizontalqueue.insert(0, "right")
-        xkey = true
+        xkey = True
         xdir = "right"
-        rightpressed = true
+        rightpressed = True
         
-      if (keyCode == 'w' and up == true and uppressed == false):
+      if (keyCode == 'w' and up == True and uppressed == False):
         directionqueue.insert(0, "up")
         verticalqueue.insert(0, "up")
-        ykey = true
+        ykey = True
         ydir = "up"
-        uppressed = true
+        uppressed = True
         
-      if (keyCode == 's' and down == true and downpressed == false):
+      if (keyCode == 's' and down == True and downpressed == False):
         directionqueue.insert(0, "down")
         verticalqueue.insert(0, "down")
-        ykey = true
+        ykey = True
         ydir = "down"
-        downpressed = true
+        downpressed = True
         
-      if (Game.Camera.movement == "down" and keyCode == ' ' and Game.weapon.attack == false):
-        Game.weapon.attack = true
+      if (Game.Camera.movement == "down" and keyCode == ' ' and Game.weapon.attack == False):
+        Game.weapon.attack = True
         if (!directionqueue.isEmpty()):
           attackDir = directionqueue.get(0)
         else:
