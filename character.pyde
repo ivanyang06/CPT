@@ -77,7 +77,7 @@ class Character(object):
             self.src = "torarightattack2.png"
           
         
-      elif (!directionqueue.isEmpty()) :
+      elif (not directionqueue) :
         if (directionqueue.get(0) == "up") :
           if (Game.animationcounter <= 10) :
             self.src = "toraup1.png"
@@ -131,7 +131,7 @@ class Character(object):
     if (self.invincible == 0):
       self.health -= healthAmount
       self.invincible += invincibleAmount
-      if (!Game.collectedTreasure.isEmpty()):
+      if (not Game.collectedTreasure):
         Game.collectedTreasure.remove(Game.collectedTreasure.size() - 1)
         Game.collectedTreasures-=1
       elif (Game.tora.bigTreasure == True):
@@ -263,7 +263,7 @@ class Character(object):
         
       if (Game.Camera.movement == "down" and keyCode == ' ' and Game.weapon.attack == False):
         Game.weapon.attack = True
-        if (!directionqueue.isEmpty()):
+        if (not directionqueue):
           attackDir = directionqueue.get(0)
         else:
           attackDir = lastDir
