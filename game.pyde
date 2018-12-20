@@ -1,4 +1,23 @@
 class Game(object):
+   
+    public Game() {
+		addKeyListener(new KeyListener() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				tora.keyReleased(e);
+			}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				tora.keyPressed(e);
+			}
+		});
+		setFocusable(true);
+	}
     def move():
         background.move()
         tora.move()
