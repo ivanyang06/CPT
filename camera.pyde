@@ -8,42 +8,42 @@ class camera(object):
     speedY = 0 
     movement = "down" 
     
-    def camera(int x, int y): 
+    def __init__(self, x, y):
         self.x = x 
         self.y = y 
      
     
-    def update():
-        if xkey == False:
-            speedX = 0 
+    def update(self):
+        if self.xkey == False:
+            self.speedX = 0 
          
-        if ykey == False: 
-            speedY = 0 
+        if self.ykey == False: 
+            self.speedY = 0 
          
         if Game.background.height - Game.frameheight > self.y: 
-            if movement == "down":  
-                speedY += 2 
+            if self.movement == "down":  
+                self.speedY += 2 
          
          
-        if Game.tora.bigTreasure == true && counter < 100:  
-            movement = "up" 
-            counter++ 
-        ifcounter == 100:  
-            Game.bgm.close() 
-            Game.playSound("TigerTigerUp.wav", "bgm") 
+        if Game.tora.bigTreasure == true and self.counter < 100:  
+            self.movement = "up" 
+            self.counter+=1
+        #if self.counter == 100:  
+        #    Game.bgm.close() 
+        #    Game.playSound("TigerTigerUp.wav", "bgm") 
          
          
-        if movement == "up" && counter == 100:  
-            speedY -= 3 
+        if self.movement == "up" and self.counter == 100:  
+            self.speedY -= 3 
          
-        if self.y <= 0 && Game.tora.bigTreasure:  
-            movement = "stop" 
+        if self.y <= 0 and Game.tora.bigTreasure:  
+            self.movement = "stop" 
          
         if Game.tora.health <= 0:
-            movement = "dead" 
+            self.movement = "dead" 
             Game.gameStatus = "lost" 
          
-        if movement == "stop":  
+        if self.movement == "stop":
             Game.tora.y -= 4 
             Game.tora.lastDir = "up" 
             Game.tora.speedX = 0 
