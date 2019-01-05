@@ -1,103 +1,92 @@
-class Game(object):
-  	static int animationcounter = 0;
-	static int framewidth = 512 + 240;
-	static int frameheight = 480;
-	static Character background = new Character(0, 0, 512, 4192, "background.png", "blank");
-	static Character tora = new Character(100, 30, 32, 32, "tora1.png", "character");
-	static Character weapon = new Character(0, 0, 10, 10, "", "weapon");
-	static Character ui = new Character(512, 0, 240, 480, "red.png", "blank");
-	static LinkedList<Character> collectedTreasure = new LinkedList<Character>();
-	static Character bigChest = new Character(600, 200, 64, 64, "", "blank");
-	String maptype;
-	static int collectedTreasures = 0;
-	static String gameStatus = "playing";
-	static LinkedList<Obstacle> obstacles = new LinkedList<Obstacle>();
-	static LinkedList<Item> treasures = new LinkedList<Item>();
+from camera import *
+from character import *
+from item import *
+from map import *
+from obstacle import *
+frameheight = 480
+obstacles = []
+animationcounter = 0
+framewidth = 512 + 240
+frameheight = 480
+background = character(0, 0, 512, 4192, "background.png", "blank")
+tora = character(100, 30, 32, 32, "tora1.png", "character")
+weapon = character(0, 0, 10, 10, "", "weapon")
+ui = character(512, 0, 240, 480, "red.png", "blank")
+collectedTreasure = []
+bigChest = character(600, 200, 64, 64, "", "blank")
+maptype = ''
+collectedTreasures = 0
+gameStatus = "playing"
 
-	static LinkedList<Clip> sounds = new LinkedList<Clip>();
-	static Clip bgm;
+treasures = []
 
-	int camx = 0;
-	int camy = 0;
-	static camera Camera = new camera(0, 0);
+sounds = []
+#Clip bgm
+camx = 0
+camy = 0
+Camera = camera(0, 0)
 
-    public Game() {
-		addKeyListener(new KeyListener() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-			}
-
-			@Override
-			public void keyReleased(KeyEvent e) {
-				tora.keyReleased(e);
-			}
-
-			@Override
-			public void keyPressed(KeyEvent e) {
-				tora.keyPressed(e);
-			}
-		});
-		setFocusable(true);
-	}
-    def move():
-        background.move()
-        tora.move()
-        for i in obstacles:
-            obstacles.get(i).move()
-    move()
+def move():
+    tora.move(framewidth, frameheight)
+    #for i in obstacles:
+    #    i.move()
     
-    def update():
-        background.update()
-        if Camera.movement != "stop":
-            for i in obstacles: 
-                obstacles.get(i).update()
-            
-        for i in treasures:
-            treasures.get(i).update();
-            tora.update();
-    update()
+def update():
+    background.update(frameheight, framewidth)
+    #if Camera.movement != "stop":
+    #    for i in obstacles: 
+    #        obstacles.get(i).update()
+    #        
+    #for i in treasures:
+    #    treasures.get(i).update()
+    tora.update(frameheight, framewidth)
     
-    def paintComponent():
-        g.translate(0, 0)
-        g.translate(-Camera.x, -Camera.y)
-        background.paint(g2d)
-        for i in obstacles:
-            obstacles.get(i).paint(g2d)
-        for i in treasures:
-            treasures.get(i).paint(g2d)
-            g.translate(Camera.x, Camera.y)
-            tora.paint(g2d)
-            ui.paint(g2d)
-        for i in collectedTreasure:
-            collectedTreasure.get(i).paint(g2d)
-            bigChest.paint(g2d)
-            g.setColor(Color.blue)
-            g.fillRect(600, 50, tora.health*10,10)
-            g.setColor(Color.black)
-            g.fillRect(600+tora.health*10,50,(10-tora.health)*10,10)
-    paintComponent()
+def paint():
+    translate(0, 0)
+    translate(-Camera.x, -Camera.y)
+    background.paint()
+    #for i in obstacles:
+    #    i.paint()
+    #for i in treasures:
+    #    i.paint()
+    translate(Camera.x, Camera.y)
+    tora.paint()
+    ui.paint()
+    #for i in collectedTreasure:
+    #    i.paint()
+    #bigChest.paint()
+    fill(255,255,255)
+    rect(600, 50, tora.health*10,10)
+    fill(0,0,0)
+    rect(600+tora.health*10,50,(10-tora.health)*10,10)
+    #print("kk")
     
-    def main(): 
-        finalwidth = framewidth
-        finalheight = frameheight
-        Game game = new Game()
-        game.maptype = "default"
-        # frame.setSize(finalwidth, finalheight)
-        game.setPreferredSize(new Dimension(finalwidth, finalheight)
-        Map.createMap()
-        print(frame.getContentPane().getSize())
-        Thread.sleep(1000)
-    main()
+def setup():
+    tora.setup()
+    background.setup()
+    ui.setup()
+    size(framewidth,frameheight)
+    #size(900,900)
     
-    def draw():
-        while gameStatus == "playing":
-        game.move()
-        tora.up = true
-        tora.down = true
-        tora.left = true
-        tora.right = true
-        game.update()
+def main(): 
+    finalwidth = framewidth
+    finalheight = frameheight
+    maptype = "default"
+    Map.createMap(Map(),obstacles,treasures,background)
+main()
+    
+def draw():
+    clear()
+    if gameStatus == "playing":
+        move()
+        tora.up = True
+        tora.down = True
+        tora.left = True
+        tora.right = True
+        update()
         Camera.update()
-        game.repaint()
-        Thread.sleep(25)
-    draw()
+        paint()
+def keyPressed():
+    character.keyPressed(tora)
+def keyReleased():
+    character.keyReleased(tora)
