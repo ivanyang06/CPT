@@ -53,7 +53,7 @@ class Obstacle(object):
             counter+=1
      
         if Game.tora.x + Game.Camera.x < self.x + self.width - 3 and Game.tora.x + Game.tora.width + Game.Camera.x > self.x + 3: 
-          if Game.tora.y + Game.Camera.y <= self.y + self.height - 2and Game.tora.y + Game.tora.height + Game.Camera.y >= self.y + 10: 
+          if Game.tora.y + Game.Camera.y <= self.y + self.height - 2 and Game.tora.y + Game.tora.height + Game.Camera.y >= self.y + 10: 
             if self.type == "wall":  
                 Game.tora.y += 3 
                 Game.tora.up = False 
