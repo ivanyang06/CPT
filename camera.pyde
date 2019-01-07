@@ -25,7 +25,7 @@ class camera(object):
                 self.speedY += 2 
          
          
-        if Game.tora.bigTreasure == true and self.counter < 100:  
+        if Game.tora.bigTreasure == True and self.counter < 100:  
             self.movement = "up" 
             self.counter+=1
         #if self.counter == 100:  
@@ -48,7 +48,7 @@ class camera(object):
             Game.tora.lastDir = "up" 
             Game.tora.speedX = 0 
             Game.tora.speedY = 0 
-            Game.tora.moving = false 
+            Game.tora.moving = False 
             
             
             x += speedX 
