@@ -1,3 +1,4 @@
+from character import *
 class Item(object):
     src = "red.png"
     def __init__(self, x, y, width, height, type, src):
@@ -9,24 +10,24 @@ class Item(object):
         self.type = type
     
     
-    def setSource(source):
-        src = source
+    def setup(self):
+        self.loadedimage = loadImage("yellow.png")
     
     
-    def update():
-        if Game.tora.x + Game.tora.width >= self.x and Game.tora.x <= self.x + self.width and Game.tora.y + Game.tora.height + Game.Camera.y >= self.y and Game.tora.y + Game.Camera.y <= self.y + self.height:
+    def update(self,tora,Camera,treasures,collectedTreasure, collectedTreasures , bigChest):
+        if tora.x + tora.width >= self.x and tora.x <= self.x + self.width and tora.y + tora.height + Camera.y >= self.y and tora.y + Camera.y <= self.y + self.height:
             if self.type == "bigTreasure":
-                Game.tora.bigTreasure = true
-                Game.treasures.remove(this)
-                Game.bigChest.src = "yellow.png"
+                tora.bigTreasure = True
+                treasures.remove(self)
+                bigChest.src = "yellow.png"
                 return
         
         if self.type == "smallTreasure": 
-            Game.treasures.remove(this)
-            Game.collectedTreasure.add(character((Game.collectedTreasures % 2) * 34 + 599, (Game.collectedTreasures - Game.collectedTreasures % 2) * 17 + 266, 32, 32, "yellow.png","blank"))
-            Game.collectedTreasures+=1
+            treasures.remove(self)
+            collectedTreasure.append(character((collectedTreasures % 2) * 34 + 599, (collectedTreasures - collectedTreasures % 2) * 17 + 266, 32, 32, "yellow.png","blank"))
+            collectedTreasures+=1
             print("item!")
+            return
             
     def paint(self):
-        loadedimage = loadImage(self.src)
-        image(loadedimage,self.x,self.y,self.width,self.height)
+        image(self.loadedimage,self.x,self.y,self.width,self.height)
