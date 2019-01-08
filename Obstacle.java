@@ -145,9 +145,11 @@ public class Obstacle {
 					&& Game.weapon.y + Game.Camera.y <= this.y + this.width
 					&& Game.weapon.y + Game.weapon.height + Game.Camera.y >= this.y) {
 				if (this.type == "aligo") {
+					Game.playSound("enemydeath.wav", "death");
 					System.out.println("hit");
 					Game.obstacles.remove(this);
 				} else if (this.type == "turtle" && Game.tora.attackDir == "up") {
+					Game.playSound("enemydeath.wav", "death");
 					System.out.println("hit");
 					Game.obstacles.remove(this);
 				}
