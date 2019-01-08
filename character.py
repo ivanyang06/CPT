@@ -130,11 +130,13 @@ class character(object):
           elif (Game.animationcounter <= 20) :
             self.src = "toraright2.png"
 
-  def loseHealth(healthAmount, invincibleAmount):
+  def loseHealth(self, healthAmount, invincibleAmount):
+    return 
+      
     if (self.invincible == 0):
       self.health -= healthAmount
       self.invincible += invincibleAmount
-      if (not Game.collectedTreasure):
+      if (not game.collectedTreasure):
         Game.collectedTreasure.remove(Game.collectedTreasure.size() - 1)
         Game.collectedTreasures-=1
       elif (Game.tora.bigTreasure == True):
@@ -208,32 +210,44 @@ class character(object):
 
   def keyReleased(self):
     if (key == 'a'):
-      self.xkey = False
-      self.directionqueue.remove("left")
-      self.horizontalqueue.remove("left")
-      self.leftpressed = False
-      lastDir = "left"
+      try:
+        self.xkey = False
+        self.directionqueue.remove("left")
+        self.horizontalqueue.remove("left")
+        self.leftpressed = False
+        lastDir = "left"
+      except:
+        pass
       
     if (key == 'd'):
-      self.xkey = False
-      self.directionqueue.remove("right")
-      self.horizontalqueue.remove("right")
-      self.rightpressed = False
-      lastDir = "right"
+      try:
+        self.xkey = False
+        self.directionqueue.remove("right")
+        self.horizontalqueue.remove("right")
+        self.rightpressed = False
+        lastDir = "right"
+      except:
+        pass
       
     if (key == 'w'):
-      self.ykey = False
-      self.directionqueue.remove("up")
-      self.verticalqueue.remove("up")
-      self.uppressed = False
-      lastDir = "up"
+      try:
+        self.ykey = False
+        self.directionqueue.remove("up")
+        self.verticalqueue.remove("up")
+        self.uppressed = False
+        lastDir = "up"
+      except:
+        pass
       
     if (key == 's'):
-      self.ykey = False
-      self.directionqueue.remove("down")
-      self.verticalqueue.remove("down")
-      self.downpressed = False
-      lastDir = "down"
+      try:
+        self.ykey = False
+        self.directionqueue.remove("down")
+        self.verticalqueue.remove("down")
+        self.downpressed = False
+        lastDir = "down"
+      except:
+        pass
 
   def keyPressed(self):
     #print(key)
