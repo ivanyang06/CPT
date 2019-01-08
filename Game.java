@@ -20,6 +20,7 @@ import java.io.File;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineEvent;
 
 @SuppressWarnings("serial")
@@ -95,6 +96,8 @@ public class Game extends JPanel {
 						.getAudioInputStream(new File(soundName).getAbsoluteFile());
 				bgm = AudioSystem.getClip();
 				bgm.open(audioInputStream);
+				FloatControl gainControl = (FloatControl) bgm.getControl(FloatControl.Type.MASTER_GAIN);
+				gainControl.setValue(-10.0f);
 				bgm.start();
 			} catch (Exception ex) {
 				ex.printStackTrace();
@@ -109,7 +112,7 @@ public class Game extends JPanel {
 				sounds.add(tempsound);
 				sounds.get(sounds.size() - 1).addLineListener(e -> {
 					if (e.getType() == LineEvent.Type.STOP) {
-						sounds.remove(sounds.size()-1);
+						sounds.remove(sounds.size() - 1);
 					}
 				});
 				sounds.get(sounds.size() - 1).open(audioInputStream);
@@ -171,7 +174,7 @@ public class Game extends JPanel {
 		Thread.sleep(1000);
 		while (gameStatus == "playing") {
 			animationcounter += 1;
-			if(animationcounter == 20) {
+			if (animationcounter == 20) {
 				animationcounter = 0;
 			}
 			game.move();
@@ -184,7 +187,7 @@ public class Game extends JPanel {
 			game.repaint();
 			Thread.sleep(25);
 			// System.out.println((tora.x + Camera.x) + ", " + (tora.y + Camera.y));
-			//System.out.println(sounds.size());
+			// System.out.println(sounds.size());
 		}
 	}
 }
