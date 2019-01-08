@@ -33,22 +33,22 @@ def move():
     
 def update():
     background.update(frameheight, framewidth)
-    #if Camera.movement != "stop":
-    #    for i in obstacles: 
-    #        obstacles.get(i).update()
-    #        
-    #for i in treasures:
-    #    treasures.get(i).update()
+    if Camera.movement != "stop":
+        for i in obstacles: 
+            i.update(tora,Camera)
+            
+    for i in treasures:
+        i.update(tora,Camera,treasures, collectedTreasure, collectedTreasures, bigChest)
     tora.update(frameheight, framewidth)
     
 def paint():
     translate(0, 0)
     translate(-Camera.x, -Camera.y)
     background.paint()
-    #for i in obstacles:
-    #    i.paint()
-    #for i in treasures:
-    #    i.paint()
+    for i in obstacles:
+        i.paint()
+    for i in treasures:
+        i.paint()
     translate(Camera.x, Camera.y)
     tora.paint()
     ui.paint()
@@ -65,6 +65,10 @@ def setup():
     tora.setup()
     background.setup()
     ui.setup()
+    for i in obstacles:
+        i.setup()
+    for i in treasures:
+        i.setup()
     size(framewidth,frameheight)
     #size(900,900)
     
@@ -84,8 +88,9 @@ def draw():
         tora.left = True
         tora.right = True
         update()
-        Camera.update()
+        Camera.update(background, frameheight, tora)
         paint()
+
 def keyPressed():
     character.keyPressed(tora)
 def keyReleased():
