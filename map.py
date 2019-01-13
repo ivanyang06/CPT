@@ -102,7 +102,6 @@ class Map(object):
             number = random.randint(0,3)
             treasures.append(Item(chestlayout[number].x, chestlayout[number].y + 448 * j + 640, chestlayout[number].width, chestlayout[number].height, "smallTreasure", "yellow.png")) 
             for i in layouts[number]:
-                print('added')
                 obstacles.append(Obstacle(i.x, i.y + 448 * j + 640, i.width, i.height, "wall.png", "still", "wall")) 
                 obstacles.append(Obstacle(enemies[number].x, enemies[number].y + 448 * j + 640, enemies[number].width, enemies[number].height, enemies[number].src, enemies[number].movetype, enemies[number].type)) 
         treasures.append(Item(128, background.height - 416, 32, 32, "smallTreasure", "yellow.png")) 
