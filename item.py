@@ -22,12 +22,12 @@ class Item(object):
                 bigChest.src = "yellow.png"
                 return
         
-        if self.type == "smallTreasure": 
-            treasures.remove(self)
-            collectedTreasure.append(character((collectedTreasures % 2) * 34 + 599, (collectedTreasures - collectedTreasures % 2) * 17 + 266, 32, 32, "yellow.png","blank"))
-            collectedTreasures+=1
-            print("item!")
-            return
+            if self.type == "smallTreasure": 
+                treasures.remove(self)
+                collectedTreasure.append(character((collectedTreasures % 2) * 34 + 599, (collectedTreasures - collectedTreasures % 2) * 17 + 266, 32, 32, "yellow.png","blank"))
+                collectedTreasures+=1
+                print("item!")
+                return
             
     def paint(self):
         image(self.loadedimage,self.x,self.y,self.width,self.height)
