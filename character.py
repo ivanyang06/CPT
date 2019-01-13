@@ -1,3 +1,8 @@
+upimages = []
+downimages = []
+leftimages = []
+rightimages = []
+transparent = loadImage("transparent.png")
 class character(object):
   xkey = False
   ykey = False
@@ -24,7 +29,8 @@ class character(object):
   invincible = 0
   attackposition = 1
   src = loadImage("red.png")
-  loadedimage = ""
+  
+  currentimage = ""
 
   directionqueue = []
   verticalqueue = []
@@ -39,141 +45,169 @@ class character(object):
       self.type = type
 
   def setup(self):
-      self.loadedimage = loadImage(self.src)
+      if self.type == "character":
+        global transparent
+        upimages.append(loadImage("toraup1.png"))
+        upimages.append(loadImage("toraup2.png"))
+        upimages.append(loadImage("toraupattack1.png"))
+        upimages.append(loadImage("toraupattack2.png"))
+        upimages.append(loadImage("upattack.png"))
+      
+        downimages.append(loadImage("toradown1.png"))
+        downimages.append(loadImage("toradown2.png"))
+        downimages.append(loadImage("toradownattack1.png"))
+        downimages.append(loadImage("toradownattack2.png"))
+        downimages.append(loadImage("downattack.png"))
+      
+        leftimages.append(loadImage("toraleft1.png"))
+        leftimages.append(loadImage("toraleft2.png"))
+        leftimages.append(loadImage("toraleftattack1.png"))
+        leftimages.append(loadImage("toraleftattack2.png"))
+        leftimages.append(loadImage("leftattack.png"))
+      
+        rightimages.append(loadImage("toraright1.png"))
+        rightimages.append(loadImage("toraright2.png"))
+        rightimages.append(loadImage("torarightattack1.png"))
+        rightimages.append(loadImage("torarightattack2.png"))
+        rightimages.append(loadImage("rightattack.png"))
+      
+        transparent = loadImage("transparent.png")
+      self.currentimage = loadImage(self.src)
 
   def move(self,framewidth,frameheight):
-    #if ((self.x - 2 >= 0 and self.speedX < 0) or (self.x + self.width + 2 <= 512 and self.speedX > 0)):
-     # if ((self.left == True and self.xdir == "left") or (self.right == True and self.xdir == "right")):
+    if ((self.x - 2 >= 0 and self.speedX < 0) or (self.x + self.width + 2 <= 512 and self.speedX > 0)):
+      if ((self.left == True and self.xdir == "left") or (self.right == True and self.xdir == "right")):
         self.x += self.speedX
-    #if ((self.y - 2 >= 0 and self.speedY < 0) or (self.y + self.height + 2 <= frameheight and self.speedY > 0)) :
-     # if ((self.up == True and self.ydir == "up") or (self.down == True and self.ydir == "down")) :
+    if ((self.y - 2 >= 0 and self.speedY < 0) or (self.y + self.height + 2 <= frameheight and self.speedY > 0)) :
+      if ((self.up == True and self.ydir == "up") or (self.down == True and self.ydir == "down")) :
         self.y += self.speedY
   
 
-  def animate(self) :
+  def animate(self, animationcounter, weapon) :
     if (self.type == "character") :
-      if (self.invincible % 10 > 7) :
-        self.src = "yellow.png"
-      elif (Game.weapon.attack == True) :
-        if (attackDir == "up") :
-          if (Game.animationcounter <= 10) :
-            self.src = "toraupattack1.png"
-          elif (Game.animationcounter <= 20) :
-            self.src = "toraupattack2.png"
+      if (self.invincible % 10 > 5) :
+        self.currentimage = transparent
+      elif (weapon.attack == True) :
+        if (self.attackDir == "up") :
+          if (animationcounter <= 10) :
+            self.currentimage = upimages[2]
+          elif (animationcounter <= 20) :
+            self.currentimage = upimages[3]
           
-        elif (attackDir == "down") :
-          if (Game.animationcounter <= 10) :
-            self.src = "toradownattack1.png"
-          elif (Game.animationcounter <= 20) :
-            self.src = "toradownattack2.png"
+        elif (self.attackDir == "down") :
+          if (animationcounter <= 10) :
+            self.currentimage = downimages[2]
+          elif (animationcounter <= 20) :
+            self.currentimage = downimages[3]
           
-        elif (attackDir == "left") :
-          if (Game.animationcounter <= 10) :
-            self.src = "toraleftattack1.png"
-          elif (Game.animationcounter <= 20) :
-            self.src = "toraleftattack2.png"
+        elif (self.attackDir == "left") :
+          if (animationcounter <= 10) :
+            self.currentimage = leftimages[2]
+          elif (animationcounter <= 20) :
+            self.currentimage = leftimages[3]
           
-        elif (attackDir == "right") :
-          if (Game.animationcounter <= 10) :
-            self.src = "torarightattack1.png"
-          elif (Game.animationcounter <= 20) :
-            self.src = "torarightattack2.png"
-          
+        elif (self.attackDir == "right") :
+          if (animationcounter <= 10) :
+            self.currentimage = rightimages[2]
+          elif (animationcounter <= 20) :
+            self.currentimage = rightimages[3]
         
-      elif (not directionqueue) :
-        if (directionqueue.get(0) == "up") :
-          if (Game.animationcounter <= 10) :
-            self.src = "toraup1.png"
-          elif (Game.animationcounter <= 20) :
-            self.src = "toraup2.png"
+      elif (len(self.directionqueue)>0) :
+        if (self.directionqueue[0] == "up") :
+          if (animationcounter <= 10) :
+            self.currentimage = upimages[0]
+          elif (animationcounter <= 20) :
+            self.currentimage = upimages[1]
           
-        elif (directionqueue.get(0) == "down") :
-          if (Game.animationcounter <= 10) :
-            self.src = "toradown1.png"
-          elif (Game.animationcounter <= 20) :
-            self.src = "toradown2.png"
+        elif (self.directionqueue[0] == "down") :
+          if (animationcounter <= 10) :
+            self.currentimage = downimages[0]
+          elif (animationcounter <= 20) :
+            self.currentimage = downimages[1]
           
-        elif (directionqueue.get(0) == "left") :
-          if (Game.animationcounter <= 10) :
-            self.src = "toraleft1.png"
-          elif (Game.animationcounter <= 20) :
-            self.src = "toraleft2.png"
+        elif (self.directionqueue[0] == "left") :
+          if (animationcounter <= 10) :
+            self.currentimage = leftimages[0]
+          elif (animationcounter <= 20) :
+            self.currentimage = leftimages[1]
           
-        elif (directionqueue.get(0) == "right") :
-          if (Game.animationcounter <= 10) :
-            self.src = "toraright1.png"
-          elif (Game.animationcounter <= 20) :
-            self.src = "toraright2.png"
+        elif (self.directionqueue[0] == "right") :
+          if (animationcounter <= 10) :
+            self.currentimage = rightimages[0]
+          elif (animationcounter <= 20) :
+            self.currentimage = rightimages[1]
         
       else :
-        if (lastDir == "up") :
-          if (Game.animationcounter <= 10) :
-            self.src = "toraup1.png"
-          elif (Game.animationcounter <= 20) :
-            self.src = "toraup2.png"
+        if (self.lastDir == "up") :
+          if (animationcounter <= 10) :
+            self.currentimage = upimages[0]
+          elif (animationcounter <= 20) :
+            self.currentimage = upimages[1]
           
-        elif (lastDir == "down") :
-          if (Game.animationcounter <= 10) :
-            self.src = "toradown1.png"
-          elif (Game.animationcounter <= 20) :
-            self.src = "toradown2.png"
+        elif (self.lastDir == "down") :
+          if (animationcounter <= 10) :
+            self.currentimage = downimages[0]
+          elif (animationcounter <= 20) :
+            self.currentimage = downimages[1]
           
-        elif (lastDir == "left") :
-          if (Game.animationcounter <= 10) :
-            self.src = "toraleft1.png"
-          elif (Game.animationcounter <= 20) :
-            self.src = "toraleft2.png"
+        elif (self.lastDir == "left") :
+          if (animationcounter <= 10) :
+            self.currentimage = leftimages[0]
+          elif (animationcounter <= 20) :
+            self.currentimage = leftimages[1]
           
-        elif (lastDir == "right") :
-          if (Game.animationcounter <= 10) :
-            self.src = "toraright1.png"
-          elif (Game.animationcounter <= 20) :
-            self.src = "toraright2.png"
+        elif (self.lastDir == "right") :
+          if (animationcounter <= 10) :
+            self.currentimage = rightimages[0]
+          elif (animationcounter <= 20) :
+            self.currentimage = rightimages[1]
 
-  def loseHealth(self, healthAmount, invincibleAmount):
-    return 
-      
+  def loseHealth(self, healthAmount, invincibleAmount):     
     if (self.invincible == 0):
       self.health -= healthAmount
       self.invincible += invincibleAmount
+      
+      
+      return
+      
       if (not game.collectedTreasure):
         Game.collectedTreasure.remove(Game.collectedTreasure.size() - 1)
         Game.collectedTreasures-=1
       elif (Game.tora.bigTreasure == True):
         Game.bigChest.src = ""
 
-  def update(self, frameheight, framewidth):
-    #if (self.invincible > 0):
-    #  self.invincible-=1
-    #if (Game.weapon.attack == True):
-    #  attackcounter += attackposition
-    #  if (attackcounter == 15):
-    #    attackposition = -1
-    #    
-    #  if (attackDir == "up"):
-    #    Game.weapon.y = Game.tora.y - attackcounter * 10
-    #    Game.weapon.x = Game.tora.x + Game.tora.width / 2 - Game.weapon.width / 2
-    #    
-    #  if (attackDir == "down"):
-    #    Game.weapon.y = Game.tora.y + attackcounter * 10
-    #    Game.weapon.x = Game.tora.x + Game.tora.width / 2 - Game.weapon.width / 2
-    #    
-    #  if (attackDir == "left"):
-    #    Game.weapon.x = Game.tora.x - attackcounter * 10
-    #    Game.weapon.y = Game.tora.y + Game.tora.height / 2 - Game.weapon.height / 2
-    #    
-    #  if (attackDir == "right"):
-    #    Game.weapon.x = Game.tora.x + attackcounter * 10
-    #    Game.weapon.y = Game.tora.y + Game.tora.height / 2 - Game.weapon.height / 2
-    #    
-    #  if (((attackDir == "up" or attackDir == "down") and Game.weapon.y == Game.tora.y) or ((attackDir == "left" or attackDir == "right") and Game.weapon.x == Game.tora.x)):
-    #    Game.weapon.attack = False
-    #    attackcounter = 0
-    #    attackposition = 1
-    #    Game.weapon.src = ""
-    #  else:
-    #    Game.weapon.y = Game.tora.y
-    #    Game.weapon.x = Game.tora.x
+  def update(self, frameheight, framewidth, animationcounter, weapon):
+    if (self.invincible > 0):
+      self.invincible-=1
+    if (weapon.attack == True):
+      self.attackcounter += self.attackposition
+      if (self.attackcounter == 15):
+        self.attackposition = -1
+        
+      if (self.attackDir == "up"):
+        weapon.y = self.y - self.attackcounter * 10
+        weapon.x = self.x + self.width / 2 - weapon.width / 2
+        
+      if (self.attackDir == "down"):
+        weapon.y = self.y + self.attackcounter * 10
+        weapon.x = self.x + self.width / 2 - weapon.width / 2
+        
+      if (self.attackDir == "left"):
+        weapon.x = self.x - self.attackcounter * 10
+        weapon.y = self.y + self.height / 2 - weapon.height / 2
+        
+      if (self.attackDir == "right"):
+        weapon.x = self.x + self.attackcounter * 10
+        weapon.y = self.y + self.height / 2 - weapon.height / 2
+        
+      if (((self.attackDir == "up" or self.attackDir == "down") and weapon.y == self.y) or ((self.attackDir == "left" or self.attackDir == "right") and weapon.x == self.x)):
+        weapon.attack = False
+        self.attackcounter = 0
+        self.attackposition = 1
+        weapon.currentimage = transparent
+    else:
+        weapon.y = self.y
+        weapon.x = self.x
 
     if (self.y + self.height > frameheight):
       self.y = frameheight - self.height
@@ -194,19 +228,20 @@ class character(object):
     elif (self.verticalqueue[0] == "down"):
       self.speedY = 3
 
-    #animate()
+    self.animate(animationcounter, weapon)
 
     if ((self.speedX == 0 and self.speedY == 0) or (self.counter == 22)):
       self.counter = 0
     else:
       self.counter+=1
 
-    # System.out.println(horizontalqueue)
-    # System.out.println(verticalqueue)
-    # System.out.println(directionqueue)
+    #print(self.horizontalqueue)
+    #print(self.verticalqueue)
+    #print(self.directionqueue)
+    #print(self.lastDir)
 
   def paint(self):
-    image(self.loadedimage,self.x,self.y,self.width,self.height)
+    image(self.currentimage,self.x,self.y,self.width,self.height)
 
   def keyReleased(self):
     if (key == 'a'):
@@ -215,7 +250,7 @@ class character(object):
         self.directionqueue.remove("left")
         self.horizontalqueue.remove("left")
         self.leftpressed = False
-        lastDir = "left"
+        self.lastDir = "left"
       except:
         pass
       
@@ -225,7 +260,7 @@ class character(object):
         self.directionqueue.remove("right")
         self.horizontalqueue.remove("right")
         self.rightpressed = False
-        lastDir = "right"
+        self.lastDir = "right"
       except:
         pass
       
@@ -235,7 +270,7 @@ class character(object):
         self.directionqueue.remove("up")
         self.verticalqueue.remove("up")
         self.uppressed = False
-        lastDir = "up"
+        self.lastDir = "up"
       except:
         pass
       
@@ -245,12 +280,20 @@ class character(object):
         self.directionqueue.remove("down")
         self.verticalqueue.remove("down")
         self.downpressed = False
-        lastDir = "down"
+        self.lastDir = "down"
+      except:
+        pass
+    if (key == 's'):
+      try:
+        self.ykey = False
+        self.directionqueue.remove("down")
+        self.verticalqueue.remove("down")
+        self.downpressed = False
+        self.lastDir = "down"
       except:
         pass
 
-  def keyPressed(self):
-    #print(key)
+  def keyPressed(self, camera, weapon):
     if (self.moving == True):
       if (key == 'a' and self.left == True and self.leftpressed == False):
         self.directionqueue.insert(0, "left")
@@ -279,20 +322,18 @@ class character(object):
         self.ykey = True
         self.ydir = "down"
         self.downpressed = True
-        
-#      if (Game.Camera.movement == "down" and keyCode == ' ' and Game.weapon.attack == False):
-#        Game.weapon.attack = True
-#        if (not directionqueue):
-#          attackDir = directionqueue.get(0)
-#        else:
-#          attackDir = lastDir
-#        Game.playSound("attack.wav", "attack")
-#        if(attackDir == "up"):
-#          Game.weapon.src = "upattack.png"
-#        elif(attackDir == "down"):
-#          Game.weapon.src = "downattack.png"
-#        elif(attackDir == "left"):
-#          Game.weapon.src = "leftattack.png"
-#        elif(attackDir == "right"):
-#          Game.weapon.src = "rightattack.png"
-#    
+      if (camera.movement == "down" and key == ' ' and weapon.attack == False):
+        weapon.attack = True
+        if (len(self.directionqueue) > 0):
+          self.attackDir = self.directionqueue[0]
+        else:
+          self.attackDir = self.lastDir
+         # Game.playSound("attack.wav", "attack")
+        if(self.attackDir == "up"):
+            weapon.currentimage = upimages[4]
+        elif(self.attackDir == "down"):
+            weapon.currentimage = downimages[4]
+        elif(self.attackDir == "left"):
+            weapon.currentimage = leftimages[4]
+        elif(self.attackDir == "right"):
+            weapon.currentimage = rightimages[4]
