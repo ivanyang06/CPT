@@ -13,19 +13,19 @@ class camera(object):
         self.y = y 
      
     
-    def update(self):
+    def update(self, background, frameheight, tora, gameStatus):
         if self.xkey == False:
             self.speedX = 0 
          
         if self.ykey == False: 
             self.speedY = 0 
          
-        if Game.background.height - Game.frameheight > self.y: 
+        if background.height - frameheight > self.y: 
             if self.movement == "down":  
-                self.speedY += 2 
+                self.speedY += 2
          
          
-        if Game.tora.bigTreasure == True and self.counter < 100:  
+        if tora.bigTreasure and self.counter < 100:
             self.movement = "up" 
             self.counter+=1
         #if self.counter == 100:  
@@ -36,22 +36,26 @@ class camera(object):
         if self.movement == "up" and self.counter == 100:  
             self.speedY -= 3 
          
-        if self.y <= 0 and Game.tora.bigTreasure:  
-            self.movement = "stop" 
+        if self.y <= 0 and tora.bigTreasure:  
+            self.movement = "stop"
+            gameStatus = "done"
          
-        if Game.tora.health <= 0:
+        if tora.health <= 0:
             self.movement = "dead" 
-            Game.gameStatus = "lost" 
+            gameStatus = "lost"
          
-        if self.movement == "stop":
-            Game.tora.y -= 4 
-            Game.tora.lastDir = "up" 
-            Game.tora.speedX = 0 
-            Game.tora.speedY = 0 
-            Game.tora.moving = False 
+        if self.movement == "stop" and gameStatus == "done":
+            tora.y -= 4 
+            tora.lastDir = "up" 
+            tora.speedX = 0 
+            tora.speedY = 0 
+            tora.moving = False 
+            if tora.y <= -50:
+                gameStatus = "won"
             
             
-            x += speedX 
-            y += speedY 
+        self.x += self.speedX 
+        self.y += self.speedY 
         
+        return gameStatus
      
