@@ -166,15 +166,7 @@ class character(object):
     if (self.invincible == 0):
       self.health -= healthAmount
       self.invincible += invincibleAmount
-      
-      
       return
-      
-      if (not game.collectedTreasure):
-        Game.collectedTreasure.remove(Game.collectedTreasure.size() - 1)
-        Game.collectedTreasures-=1
-      elif (Game.tora.bigTreasure == True):
-        Game.bigChest.src = ""
 
   def update(self, frameheight, framewidth, animationcounter, weapon):
     if (self.invincible > 0):
