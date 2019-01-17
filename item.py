@@ -15,8 +15,7 @@ class Item(object):
         if self.type == "gems":
             self.loadedimage = loadImage("gem.png")
         else:
-            self.loadedimage = loadImage("treasures.png")
-        
+            self.loadedimage = loadImage("treasure.png")
     
     
     def update(self,tora,Camera,treasures,collectedTreasure, collectedTreasures , bigChest):
@@ -37,8 +36,8 @@ class Item(object):
                 print("item!")
             
             if self.type == "gems":
-                gems.remove(self)
-                collectedGems += 1
+                treasures.remove(self)
+                collectedTreasures += 1
             
     def paint(self):
         image(self.loadedimage,self.x,self.y,self.width,self.height)
