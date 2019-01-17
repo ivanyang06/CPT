@@ -20,7 +20,7 @@ gameStatus = "start"
 
 treasures = []
 
-collectedGem[]
+collectedGem = []
 gems = []
 collectedGems = 0
 
@@ -53,8 +53,7 @@ def update():
     tora.update(frameheight, framewidth, animationcounter, weapon)
     
     for i in gems:
-        i.update(tora,Camera,gems,collectedGem, collectedGems)
-    tora.update(frameheight, framewidth, animationcounter, weapon)
+        i.update(tora,Camera,gems,collectedGem, collectedGems, bigChest)
     
 def paint():
     translate(0, 0)
@@ -63,6 +62,8 @@ def paint():
     for i in obstacles:
         i.paint()
     for i in treasures:
+        i.paint()
+    for i in gems:
         i.paint()
     translate(Camera.x, Camera.y)
     tora.paint()
@@ -88,6 +89,8 @@ def setup():
         i.setup()
     for i in treasures:
         i.setup()
+    for i in gems:
+        i.setup()
     size(framewidth,frameheight)
     noSmooth()
     #size(900,900)
@@ -96,7 +99,7 @@ def main():
     finalwidth = framewidth
     finalheight = frameheight
     maptype = "default"
-    Map.createMap(Map(),obstacles,treasures,background)
+    Map.createMap(Map(),obstacles,treasures, gems,background)
 main()
     
 def draw():
