@@ -18,10 +18,12 @@ class Map(object):
 
         layouts = [None] * 5
         chestlayout = [None] * 5
+        gemlayout = [None] * 5
         enemies = [None] * 5
         for i in range(len(layouts)):
             layouts[i] = []
         chestlayout[0] = Item(192, -32, 32, 32, "smallTreasure", "yellow.png")
+        gemlayout[0] = Item(190,-20,28,28,"gems","gem.png")
         layouts[0].append(Obstacle(192, 0, 32, 32, "wall.png", "still", "wall"))
         layouts[0].append(Obstacle(192, 32, 32, 32, "wall.png", "still", "wall"))
         layouts[0].append(Obstacle(224, 0, 32, 32, "wall.png", "still", "wall"))
@@ -43,6 +45,7 @@ class Map(object):
         layouts[0].append(Obstacle(384, 256, 32, 32, "wall.png", "still", "wall"))
     
         chestlayout[1] = Item(32, 160, 32, 32, "smallTreasure", "yellow.png")
+        gemlayout[1] = Item(25,150,28,28,"gems","gem.png")
         layouts[1].append(Obstacle(0, 192, 32, 32, "wall.png", "still", "wall"))
         layouts[1].append(Obstacle(0, 224, 32, 32, "wall.png", "still", "wall"))
         layouts[1].append(Obstacle(0, 256, 32, 32, "wall.png", "still", "wall"))
@@ -59,6 +62,7 @@ class Map(object):
         layouts[1].append(Obstacle(448, 256, 32, 32, "wall.png", "still", "wall"))
     
         chestlayout[2] = Item(256, 128, 32, 32, "smallTreasure", "yellow.png")
+        gemlayout[2] = Item(240,118,28,28,"gems","gem.png")
         layouts[2].append(Obstacle(0, 192, 32, 32, "wall.png", "still", "wall"))
         layouts[2].append(Obstacle(0, 224, 32, 32, "wall.png", "still", "wall"))
         layouts[2].append(Obstacle(0, 256, 32, 32, "wall.png", "still", "wall"))
@@ -75,6 +79,7 @@ class Map(object):
         layouts[2].append(Obstacle(288, 224, 32, 32, "wall.png", "still", "wall"))
     
         chestlayout[3] = Item(128, 192, 32, 32, "smallTreasure", "yellow.png")
+        gemlayout[3] = Item(114,179,28,28,"gems","gem.png")
         layouts[3].append(Obstacle(256, 32, 32, 32, "wall.png", "still", "wall"))
         layouts[3].append(Obstacle(256, 0, 32, 32, "wall.png", "still", "wall"))
         layouts[3].append(Obstacle(224, 32, 32, 32, "wall.png", "still", "wall")) 
@@ -105,6 +110,7 @@ class Map(object):
                 obstacles.append(Obstacle(i.x, i.y + 448 * j + 640, i.width, i.height, "wall.png", "still", "wall")) 
                 obstacles.append(Obstacle(enemies[number].x, enemies[number].y + 448 * j + 640, enemies[number].width, enemies[number].height, enemies[number].src, enemies[number].movetype, enemies[number].type)) 
         treasures.append(Item(128, background.height - 416, 32, 32, "smallTreasure", "yellow.png")) 
+        gems.append(Item(120, background.height - 400, 28, 28, "gems", "gem.png))
         obstacles.append(Obstacle(384, (background.height - 192), 32, 32, "wall.png", "still", "wall")) 
         obstacles.append(Obstacle(384, (background.height - 224), 32, 32, "wall.png", "still", "wall")) 
         obstacles.append(Obstacle(384, (background.height - 256), 32, 32, "wall.png", "still", "wall")) 
