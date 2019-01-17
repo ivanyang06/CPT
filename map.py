@@ -118,8 +118,8 @@ class Map(object):
         obstacles.append(Obstacle(352, (background.height - 224), 32, 32, "wall.png", "still", "wall")) 
         obstacles.append(Obstacle(352, (background.height - 256), 32, 32, "wall.png", "still", "wall")) 
     
-        obstacles.append(Obstacle(352, (background.height - 64), 32, 32, "red.png", "still", "urchon")) 
-        obstacles.append(Obstacle(128, (background.height - 64), 32, 32, "red.png", "still", "urchon")) 
+        obstacles.append(Obstacle(352, (background.height - 64), 32, 32, "urchin.png", "still", "urchon")) 
+        obstacles.append(Obstacle(128, (background.height - 64), 32, 32, "urchin.png", "still", "urchon")) 
     
         obstacles.append(Obstacle(96, (background.height - 320), 32, 32, "wall.png", "still", "wall")) 
         obstacles.append(Obstacle(96, (background.height - 352), 32, 32, "wall.png", "still", "wall")) 
