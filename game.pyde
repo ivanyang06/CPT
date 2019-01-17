@@ -11,9 +11,9 @@ frameheight = 480
 background = character(0, 0, 512, 4192, "background.png", "blank")
 tora = character(100, 30, 32, 32, "tora1.png", "character")
 weapon = character(0, 0, 10, 10, "transparent.png", "weapon")
-ui = character(512, 0, 240, 480, "red.png", "blank")
+ui = character(512, 0, 240, 480, "ui.png", "blank")
 collectedTreasure = []
-bigChest = character(600, 200, 64, 64, "", "blank")
+bigChest = character(600, 200, 64, 64, "transparent.png", "blank")
 maptype = ''
 collectedTreasures = 0
 gameStatus = "start"
@@ -60,13 +60,13 @@ def paint():
     tora.paint()
     weapon.paint()
     ui.paint()
-    #for i in collectedTreasure:
-    #    i.paint()
-    #bigChest.paint()
-    fill(255,255,255)
-    rect(600, 50, tora.health*10,10)
-    fill(0,0,0)
-    rect(600+tora.health*10,50,(10-tora.health)*10,10)
+    for i in collectedTreasure:
+        i.paint()
+    bigChest.paint()
+    noStroke()
+    fill(10,225,255)
+    if tora.health >=0:
+        rect(540, 122, tora.health*19,23)
     #print("kk")
     
 def setup():
@@ -75,6 +75,7 @@ def setup():
     weapon.setup()
     background.setup()
     ui.setup()
+    bigChest.setup()
     for i in obstacles:
         i.setup()
     for i in treasures:

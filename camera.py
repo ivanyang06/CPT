@@ -4,6 +4,7 @@ class camera(object):
     x = 0 
     y = 0 
     counter = 0 
+    deathcounter = 0
     speedX = 0 
     speedY = 0 
     movement = "down" 
@@ -41,8 +42,13 @@ class camera(object):
             gameStatus = "done"
          
         if tora.health <= 0:
-            self.movement = "dead" 
-            gameStatus = "lost"
+            self.movement = "dead"
+            
+        if self.movement == "dead":
+            self.deathcounter+=1
+            if self.deathcounter == 50:
+                gameStatus = "lost"
+            
          
         if self.movement == "stop" and gameStatus == "done":
             tora.y -= 4 
