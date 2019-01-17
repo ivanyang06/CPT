@@ -12,7 +12,11 @@ class Item(object):
     
     
     def setup(self):
-        self.loadedimage = loadImage("treasure.png")
+        if self.type == "gems":
+            self.loadedimage = loadImage("gem.png")
+        else:
+            self.loadedimage = loadImage("treasures.png")
+        
     
     
     def update(self,tora,Camera,treasures,collectedTreasure, collectedTreasures , bigChest):
