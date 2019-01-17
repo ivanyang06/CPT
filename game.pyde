@@ -20,6 +20,10 @@ gameStatus = "start"
 
 treasures = []
 
+collectedGem[]
+gems = []
+collectedGems = 0
+
 sounds = []
 #Clip bgm
 camx = 0
@@ -46,6 +50,10 @@ def update():
             
     for i in treasures:
         i.update(tora,Camera,treasures, collectedTreasure, collectedTreasures, bigChest)
+    tora.update(frameheight, framewidth, animationcounter, weapon)
+    
+    for i in gems:
+        i.update(tora,Camera,gems,collectedGem, collectedGems)
     tora.update(frameheight, framewidth, animationcounter, weapon)
     
 def paint():
