@@ -32,5 +32,9 @@ class Item(object):
                 collectedTreasure[tempcollectedtreasures-1].setup()
                 print("item!")
             
+            if self.type == "gems":
+                gems.remove(self)
+                collectedGems += 1
+            
     def paint(self):
         image(self.loadedimage,self.x,self.y,self.width,self.height)
