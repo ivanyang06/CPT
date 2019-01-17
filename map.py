@@ -2,7 +2,7 @@ from obstacle import *
 from item import *
 import random
 class Map(object):
-    def createMap(self,obstacles,treasures,background):
+    def createMap(self,obstacles,treasures, gems,background):
         obstacles.append(Obstacle(224, 256, 32, 32, "wall.png", "still", "wall"))
         obstacles.append(Obstacle(256, 256, 32, 32, "wall.png", "still", "wall"))
     
@@ -110,7 +110,7 @@ class Map(object):
                 obstacles.append(Obstacle(i.x, i.y + 448 * j + 640, i.width, i.height, "wall.png", "still", "wall")) 
                 obstacles.append(Obstacle(enemies[number].x, enemies[number].y + 448 * j + 640, enemies[number].width, enemies[number].height, enemies[number].src, enemies[number].movetype, enemies[number].type)) 
         treasures.append(Item(128, background.height - 416, 32, 32, "smallTreasure", "yellow.png")) 
-        gems.append(Item(120, background.height - 400, 28, 28, "gems", "gem.png))
+        gems.append(Item(120, background.height - 400, 28, 28, "gems", "gem.png"))
         obstacles.append(Obstacle(384, (background.height - 192), 32, 32, "wall.png", "still", "wall")) 
         obstacles.append(Obstacle(384, (background.height - 224), 32, 32, "wall.png", "still", "wall")) 
         obstacles.append(Obstacle(384, (background.height - 256), 32, 32, "wall.png", "still", "wall")) 
@@ -133,4 +133,4 @@ class Map(object):
     
         for i in range(0,16):
             obstacles.append(Obstacle(i * 32, (background.height - 32), 32, 32, "wall.png", "still", "wall")) 
-            treasures.append(Item(224, (background.height - 96), 64, 64, "bigTreasure", "yellow.png")) 
+        treasures.append(Item(224, (background.height - 96), 64, 64, "bigTreasure", "yellow.png")) 
