@@ -1,166 +1,197 @@
-class Obstacle(object):
-    xkey = False
-    ykey = False
-    speedX = 0
-    speedY = 0
-    src = "red.png"
-    type = "blank"
-    counter = 0
-    lastDir = "up"
-    direction = 2
-    loadedimage = ""
-    images = []
+from obstacle import *
+from item import *
+import random
 
-    def __init__(self, x, y, width, height, src, movetype, type):
-        self.src = src
-        self.x = x
-        self.y = y
-        self.width = width
-        self.height = height
-        self.type = type
-        self.movetype = movetype
 
-    def setup(self):
-        self.images.append(loadImage("greenaligo0.png"))
-        self.images.append(loadImage("greenaligo1.png"))
-        self.images.append(loadImage("greenaligo2.png"))
-        self.images.append(loadImage("greenaligo3.png"))
-        self.images.append(loadImage("turtle0.png"))
-        self.images.append(loadImage("turtle1.png"))
-        self.images.append(loadImage("turtle2.png"))
-        self.images.append(loadImage("turtle3.png"))
-        self.loadedimage = loadImage(self.src)
+class Map(object):
+    def createMap(self, obstacles, treasures, gems, background):
+        obstacles.append(Obstacle(224, 256, 32, 32, "wall.png", "still", "wall"))
+        obstacles.append(Obstacle(256, 256, 32, 32, "wall.png", "still", "wall"))
 
-    def move(self):
-        if self.movetype == "movingenemy":
-            self.x += self.direction
+        obstacles.append(Obstacle(96, 448, 32, 32, "wall.png", "still", "wall"))
+        obstacles.append(Obstacle(64, 448, 32, 32, "wall.png", "still", "wall"))
+        obstacles.append(Obstacle(96, 480, 32, 32, "wall.png", "still", "wall"))
+        obstacles.append(Obstacle(64, 480, 32, 32, "wall.png", "still", "wall"))
 
-    def animate(self, animationcounter):
-        if self.direction > 0:
-            if animationcounter <= 10:
-                if self.type == "aligo":
-                    self.loadedimage = self.images[0]
-                elif self.type == "turtle":
-                    self.loadedimage = self.images[4]
-            elif animationcounter <= 20:
-                if self.type == "aligo":
-                    self.loadedimage = self.images[1]
-                elif self.type == "turtle":
-                    self.loadedimage = self.images[5]
-        elif self.direction < 0:
-            if animationcounter <= 10:
-                if self.type == "aligo":
-                    self.loadedimage = self.images[2]
-                elif self.type == "turtle":
-                    self.loadedimage = self.images[6]
-            elif animationcounter <= 20:
-                if self.type == "aligo":
-                    self.loadedimage = self.images[3]
-                elif self.type == "turtle":
-                    self.loadedimage = self.images[7]
+        obstacles.append(Obstacle(416, 448, 32, 32, "wall.png", "still", "wall"))
+        obstacles.append(Obstacle(384, 448, 32, 32, "wall.png", "still", "wall"))
+        obstacles.append(Obstacle(416, 480, 32, 32, "wall.png", "still", "wall"))
+        obstacles.append(Obstacle(384, 480, 32, 32, "wall.png", "still", "wall"))
 
-    def update(self, tora, Camera, obstacles, weapon, animationcounter, enemiesHit):
-        self.animate(animationcounter)
-        if self.xkey is False:
-            self.speedX = 0
+        gems.append(Item(160, 256, 28, 28, "gems", "gem.png"))
+        gems.append(Item(64, 256, 28, 28, "gems", "gem.png"))
 
-        if self.ykey is False:
-            self.speedY = 0
+        gems.append(Item(416, 256, 28, 28, "gems", "gem.png"))
+        gems.append(Item(320, 256, 28, 28, "gems", "gem.png"))
 
-        if ((self.speedX == 0 and self.speedY == 0) or (self.counter == 22)):
-            self.counter = 0
-        else:
-            self.counter += 1
+        gems.append(Item(192, 470, 28, 28, "gems", "gem.png"))
+        gems.append(Item(288, 470, 28, 28, "gems", "gem.png"))
 
-        if tora.x + Camera.x < self.x + self.width - 3 and tora.x + tora.width + Camera.x > self.x + 3:
-            if tora.y + Camera.y <= self.y + self.height - 3 and tora.y + tora.height + Camera.y >= self.y + 10:
-                if self.type == "wall":
-                    tora.y += 5
-                    tora.up = False
-                    tora.loseHealth(2, 100)
+        obstacles.append(Obstacle(40, 350, 64, 32, "greenaligo0.png", "movingenemy", "aligo"))
 
-                if self.type == "urchon":
-                    tora.loseHealth(10, 100)
+        layouts = [None] * 5
+        chestlayout = [None] * 5
+        gemlayout = [None] * 5
+        enemies = [None] * 5
+        for i in range(len(layouts)):
+            layouts[i] = []
+            enemies[i] = []
+            gemlayout[i] = []
 
-                if self.type == "aligo":
-                    tora.loseHealth(4, 100)
+        chestlayout[0] = Item(192, -32, 32, 32, "smallTreasure", "yellow.png")
+        gemlayout[0].append(Item(288, 0, 28, 28, "gems", "gem.png"))
+        gemlayout[0].append(Item(352, 0, 28, 28, "gems", "gem.png"))
+        gemlayout[0].append(Item(64, 0, 28, 28, "gems", "gem.png"))
+        gemlayout[0].append(Item(128, 0, 28, 28, "gems", "gem.png"))
+        gemlayout[0].append(Item(300, 192, 28, 28, "gems", "gem.png"))
+        layouts[0].append(Obstacle(192, 0, 32, 32, "wall.png", "still", "wall"))
+        layouts[0].append(Obstacle(192, 32, 32, 32, "wall.png", "still", "wall"))
+        layouts[0].append(Obstacle(224, 0, 32, 32, "wall.png", "still", "wall"))
+        layouts[0].append(Obstacle(224, 32, 32, 32, "wall.png", "still", "wall"))
 
-                if self.type == "turtle":
-                    tora.loseHealth(3, 100)
+        enemies[0].append(Obstacle(150, 30, 64, 32, "turtle0.png", "movingenemy", "turtle"))
+        enemies[0].append(Obstacle(200, 192, 32, 32, "urchin.png", "still", "urchon"))
+        enemies[0].append(Obstacle(300, 30, 64, 32, "turtle0.png", "movingenemy", "turtle"))
+        enemies[0].append(Obstacle(200, 256, 64, 32, "greenaligo0.png", "movingenemy", "aligo"))
 
-            if tora.y + Camera.y <= self.y + self.height - 10 and tora.y + Camera.y + tora.height >= self.y + 3:
-                if self.type == "wall":
-                    tora.y -= 5
-                    tora.down = False
-                    tora.loseHealth(1, 100)
+        layouts[0].append(Obstacle(64, 192, 32, 32, "wall.png", "still", "wall"))
+        layouts[0].append(Obstacle(64, 224, 32, 32, "wall.png", "still", "wall"))
+        layouts[0].append(Obstacle(64, 256, 32, 32, "wall.png", "still", "wall"))
+        layouts[0].append(Obstacle(96, 192, 32, 32, "wall.png", "still", "wall"))
+        layouts[0].append(Obstacle(96, 224, 32, 32, "wall.png", "still", "wall"))
+        layouts[0].append(Obstacle(96, 256, 32, 32, "wall.png", "still", "wall"))
 
-                if self.type == "urchon":
-                    tora.loseHealth(10, 100)
+        layouts[0].append(Obstacle(416, 192, 32, 32, "wall.png", "still", "wall"))
+        layouts[0].append(Obstacle(416, 224, 32, 32, "wall.png", "still", "wall"))
+        layouts[0].append(Obstacle(416, 256, 32, 32, "wall.png", "still", "wall"))
+        layouts[0].append(Obstacle(384, 192, 32, 32, "wall.png", "still", "wall"))
+        layouts[0].append(Obstacle(384, 224, 32, 32, "wall.png", "still", "wall"))
+        layouts[0].append(Obstacle(384, 256, 32, 32, "wall.png", "still", "wall"))
 
-                if self.type == "aligo":
-                    tora.loseHealth(4, 100)
+        chestlayout[1] = Item(32, 160, 32, 32, "smallTreasure", "yellow.png")
+        gemlayout[1].append(Item(32, 0, 28, 28, "gems", "gem.png"))
+        gemlayout[1].append(Item(128, 0, 28, 28, "gems", "gem.png"))
+        gemlayout[1].append(Item(448, 0, 28, 28, "gems", "gem.png"))
+        gemlayout[1].append(Item(352, 0, 28, 28, "gems", "gem.png"))
+        layouts[1].append(Obstacle(0, 192, 32, 32, "wall.png", "still", "wall"))
+        layouts[1].append(Obstacle(0, 224, 32, 32, "wall.png", "still", "wall"))
+        layouts[1].append(Obstacle(0, 256, 32, 32, "wall.png", "still", "wall"))
+        layouts[1].append(Obstacle(32, 192, 32, 32, "wall.png", "still", "wall"))
+        layouts[1].append(Obstacle(32, 224, 32, 32, "wall.png", "still", "wall"))
+        layouts[1].append(Obstacle(32, 256, 32, 32, "wall.png", "still", "wall"))
 
-                if self.type == "turtle":
-                    tora.loseHealth(3, 100)
+        enemies[1].append(Obstacle(400, 185, 64, 32, "greenaligo0.png", "movingenemy", "aligo"))
+        enemies[1].append(Obstacle(200, 50, 64, 32, "turtle0.png", "movingenemy", "turtle"))
+        enemies[1].append(Obstacle(20, -64, 64, 32, "greenaligo0.png", "movingenemy", "aligo"))
+        enemies[1].append(Obstacle(240, 0, 32, 32, "urchin.png", "still", "urchon"))
 
-        if tora.y + Camera.y < self.y + self.height - 3 and tora.y + tora.height + Camera.y > self.y + 3:
-            if tora.x + Camera.x <= self.x + self.width - 3 and tora.x + Camera.x + tora.width >= self.x + 10:
-                if self.type == "wall":
-                    tora.x += 3
-                    tora.left = False
-                    tora.loseHealth(1, 100)
+        layouts[1].append(Obstacle(480, 192, 32, 32, "wall.png", "still", "wall"))
+        layouts[1].append(Obstacle(480, 224, 32, 32, "wall.png", "still", "wall"))
+        layouts[1].append(Obstacle(480, 256, 32, 32, "wall.png", "still", "wall"))
+        layouts[1].append(Obstacle(448, 192, 32, 32, "wall.png", "still", "wall"))
+        layouts[1].append(Obstacle(448, 224, 32, 32, "wall.png", "still", "wall"))
+        layouts[1].append(Obstacle(448, 256, 32, 32, "wall.png", "still", "wall"))
 
-                if self.type == "urchon":
-                    tora.loseHealth(10, 100)
+        chestlayout[2] = Item(256, 128, 32, 32, "smallTreasure", "yellow.png")
+        gemlayout[2].append(Item(352, 160, 28, 28, "gems", "gem.png"))
+        gemlayout[2].append(Item(416, 160, 28, 28, "gems", "gem.png"))
+        gemlayout[2].append(Item(96, 176, 28, 28, "gems", "gem.png"))
+        gemlayout[2].append(Item(192, 176, 28, 28, "gems", "gem.png"))
+        layouts[2].append(Obstacle(0, 192, 32, 32, "wall.png", "still", "wall"))
+        layouts[2].append(Obstacle(0, 224, 32, 32, "wall.png", "still", "wall"))
+        layouts[2].append(Obstacle(0, 256, 32, 32, "wall.png", "still", "wall"))
+        layouts[2].append(Obstacle(480, 192, 32, 32, "wall.png", "still", "wall"))
+        layouts[2].append(Obstacle(480, 224, 32, 32, "wall.png", "still", "wall"))
+        layouts[2].append(Obstacle(480, 256, 32, 32, "wall.png", "still", "wall"))
 
-                if self.type == "aligo":
-                    tora.loseHealth(4, 100)
+        enemies[2].append(Obstacle(200, 248, 64, 32, "greenaligo0.png", "movingenemy", "aligo"))
+        enemies[2].append(Obstacle(200, 0, 64, 32, "turtle0.png", "movingenemy", "turtle"))
+        enemies[2].append(Obstacle(384, 224, 32, 32, "urchin.png", "still", "urchon"))
 
-                if self.type == "turtle":
-                    tora.loseHealth(3, 100)
+        layouts[2].append(Obstacle(256, 160, 32, 32, "wall.png", "still", "wall"))
+        layouts[2].append(Obstacle(256, 192, 32, 32, "wall.png", "still", "wall"))
+        layouts[2].append(Obstacle(256, 224, 32, 32, "wall.png", "still", "wall"))
+        layouts[2].append(Obstacle(288, 160, 32, 32, "wall.png", "still", "wall"))
+        layouts[2].append(Obstacle(288, 192, 32, 32, "wall.png", "still", "wall"))
+        layouts[2].append(Obstacle(288, 224, 32, 32, "wall.png", "still", "wall"))
 
-            if tora.x + Camera.x <= self.x + self.width - 10 and tora.x + Camera.x + tora.width >= self.x + 3:
-                if self.type == "wall":
-                    tora.x -= 3
-                    tora.right = False
-                    tora.loseHealth(1, 100)
+        chestlayout[3] = Item(128, 192, 32, 32, "smallTreasure", "yellow.png")
+        gemlayout[3].append(Item(64,128,28,28,"gems","gem.png"))
+        gemlayout[3].append(Item(114,128,28,28,"gems","gem.png"))
+        gemlayout[3].append(Item(320,128,28,28,"gems","gem.png"))
+        gemlayout[3].append(Item(384,128,28,28,"gems","gem.png"))
+        layouts[3].append(Obstacle(256, 32, 32, 32, "wall.png", "still", "wall"))
+        layouts[3].append(Obstacle(256, 0, 32, 32, "wall.png", "still", "wall"))
+        layouts[3].append(Obstacle(224, 32, 32, 32, "wall.png", "still", "wall")) 
+        layouts[3].append(Obstacle(224, 0, 32, 32, "wall.png", "still", "wall")) 
 
-                if self.type == "urchon":
-                    tora.loseHealth(10, 100)
+        enemies[3].append(Obstacle(210, 0, 64, 32, "greenaligo0.png", "movingenemy", "aligo"))
+        enemies[3].append(Obstacle(310, 0, 64, 32, "greenaligo0.png", "movingenemy", "aligo"))
+        enemies[3].append(Obstacle(128, 64, 32, 32, "urchin.png", "still", "urchon"))
+        enemies[3].append(Obstacle(352, 64, 32, 32, "urchin.png", "still", "urchon"))
+        enemies[3].append(Obstacle(256, 256, 32, 32, "urchin.png", "still", "urchon"))
 
-                if self.type == "aligo":
-                    tora.loseHealth(4, 100)
+        layouts[3].append(Obstacle(96, 256, 32, 32, "wall.png", "still", "wall")) 
+        layouts[3].append(Obstacle(96, 224, 32, 32, "wall.png", "still", "wall")) 
+        layouts[3].append(Obstacle(128, 256, 32, 32, "wall.png", "still", "wall")) 
+        layouts[3].append(Obstacle(128, 224, 32, 32, "wall.png", "still", "wall")) 
 
-                if self.type == "turtle":
-                    tora.loseHealth(3, 100)
+        layouts[3].append(Obstacle(384, 256, 32, 32, "wall.png", "still", "wall")) 
+        layouts[3].append(Obstacle(384, 224, 32, 32, "wall.png", "still", "wall")) 
+        layouts[3].append(Obstacle(352, 256, 32, 32, "wall.png", "still", "wall")) 
+        layouts[3].append(Obstacle(352, 224, 32, 32, "wall.png", "still", "wall")) 
 
-        if self.movetype == "movingenemy":
-            if weapon.attack is True and weapon.x <= self.x + self.width and weapon.x + weapon.width >= self.x and weapon.y + Camera.y <= self.y + self.width and weapon.y + weapon.height + Camera.y >= self.y:
-                if (self.type == "aligo"):
-                    enemiesHit.append(1)
-                    obstacles.remove(self)
-                elif self.type == "turtle" and tora.attackDir == "up":
-                    enemiesHit.append(1)
-                    obstacles.remove(self)
+        layouts[4].append(Obstacle(0, 0, 32, 32, "wall.png", "still", "wall")) 
+        layouts[4].append(Obstacle(32, 0, 32, 32, "wall.png", "still", "wall")) 
+        layouts[4].append(Obstacle(64, 0, 32, 32, "wall.png", "still", "wall")) 
+        layouts[4].append(Obstacle(0, 32, 32, 32, "wall.png", "still", "wall")) 
+        layouts[4].append(Obstacle(32, 32, 32, 32, "wall.png", "still", "wall")) 
+        layouts[4].append(Obstacle(64, 32, 32, 32, "wall.png", "still", "wall")) 
+        chestlayout[4] = Item(32, -32, 32, 32, "smallTreasure", "yellow.png")
 
-        if self.direction > 0 and self.x + self.width + 10 > 512 or self.direction < 0 and self.x - 10 < 0:
-            self.direction *= -1
+        gemlayout[4].append(Item(32,100,28,28,"gems","gem.png"))
+        gemlayout[4].append(Item(128,100,28,28,"gems","gem.png"))
+        gemlayout[4].append(Item(448,100,28,28,"gems","gem.png"))
+        gemlayout[4].append(Item(352,100,28,28,"gems","gem.png"))
 
-        for i in obstacles:
-            if i.type == "wall":
-                if self.y < i.y + i.height and self.y + self.width > i.y:
-                    if self.direction > 0 and self.x + self.width + 10 > i.x and self.x + self.width + 10 < i.x + i.width:
-                        self.direction *= -1
-                        break
-                    if self.direction < 0 and self.x - 10 > i.x and self.x - 10 < i.x + i.width:
-                        self.direction *= -1
-                        break
+        enemies[4].append(Obstacle(210, 0, 64, 32, "greenaligo0,png", "movingenemy", "aligo"))
+        enemies[4].append(Obstacle(400, 185, 64, 32, "greenaligo0.png", "movingenemy", "aligo"))
+        enemies[4].append(Obstacle(300, 50, 64, 32, "turtle0.png", "movingenemy", "turtle"))
+        enemies[4].append(Obstacle(240, 250, 32, 32, "urchin.png", "still", "urchon"))
 
-    def paint(self):
-        image(self.loadedimage, self.x, self.y, self.width, self.height)
+        number = -1 
+        prev = -1 
+        for j in range(0,7):
+            number = random.randint(0,4)
+            treasures.append(Item(chestlayout[number].x, chestlayout[number].y + 448 * j + 640, chestlayout[number].width, chestlayout[number].height, "smallTreasure", "yellow.png")) 
+            for i in layouts[number]:
+                obstacles.append(Obstacle(i.x, i.y + 448 * j + 640, i.width, i.height, "wall.png", "still", "wall")) 
+            for i in enemies[number]:
+                obstacles.append(Obstacle(i.x, i.y + 448 * j + 640, i.width, i.height, i.src, i.movetype, i.type)) 
+            for i in gemlayout[number]:
+                gems.append(Item(i.x, i.y + 448 * j + 640, i.width, i.height, "gems", "gem.png"))
 
-    def keyReleased(e):
-        if e.getKeyCode() == KeyEvent.VK_LEFT or e.getKeyCode() == KeyEvent.VK_RIGHT:
-            xkey = False
-        else:
-            ykey = False
+        treasures.append(Item(128, background.height - 416, 32, 32, "smallTreasure", "yellow.png")) 
+        obstacles.append(Obstacle(384, (background.height - 192), 32, 32, "wall.png", "still", "wall")) 
+        obstacles.append(Obstacle(384, (background.height - 224), 32, 32, "wall.png", "still", "wall")) 
+        obstacles.append(Obstacle(384, (background.height - 256), 32, 32, "wall.png", "still", "wall")) 
+        obstacles.append(Obstacle(352, (background.height - 192), 32, 32, "wall.png", "still", "wall")) 
+        obstacles.append(Obstacle(352, (background.height - 224), 32, 32, "wall.png", "still", "wall")) 
+        obstacles.append(Obstacle(352, (background.height - 256), 32, 32, "wall.png", "still", "wall")) 
+
+        obstacles.append(Obstacle(352, (background.height - 64), 32, 32, "urchin.png", "still", "urchon")) 
+        obstacles.append(Obstacle(128, (background.height - 64), 32, 32, "urchin.png", "still", "urchon")) 
+
+        obstacles.append(Obstacle(96, (background.height - 320), 32, 32, "wall.png", "still", "wall")) 
+        obstacles.append(Obstacle(96, (background.height - 352), 32, 32, "wall.png", "still", "wall")) 
+        obstacles.append(Obstacle(96, (background.height - 384), 32, 32, "wall.png", "still", "wall")) 
+        obstacles.append(Obstacle(128, (background.height - 320), 32, 32, "wall.png", "still", "wall")) 
+        obstacles.append(Obstacle(128, (background.height - 352), 32, 32, "wall.png", "still", "wall")) 
+        obstacles.append(Obstacle(128, (background.height - 384), 32, 32, "wall.png", "still", "wall")) 
+
+        obstacles.append(Obstacle(210, (background.height-200), 64, 32, "greenaligo0.png", "movingenemy", "aligo")) 
+        obstacles.append(Obstacle(210, (background.height-350), 64, 32, "turtle0.png", "movingenemy", "turtle")) 
+
+        for i in range(0,16):
+            obstacles.append(Obstacle(i * 32, (background.height - 32), 32, 32, "wall.png", "still", "wall")) 
+        treasures.append(Item(224, (background.height - 96), 64, 64, "bigTreasure", "yellow.png")) 
