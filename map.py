@@ -116,13 +116,13 @@ class Map(object):
         layouts[2].append(Obstacle(288, 224, 32, 32, "wall.png", "still", "wall"))
 
         chestlayout[3] = Item(128, 192, 32, 32, "smallTreasure", "yellow.png")
-        gemlayout[3].append(Item(64,128,28,28,"gems","gem.png"))
-        gemlayout[3].append(Item(114,128,28,28,"gems","gem.png"))
-        gemlayout[3].append(Item(320,128,28,28,"gems","gem.png"))
-        gemlayout[3].append(Item(384,128,28,28,"gems","gem.png"))
+        gemlayout[3].append(Item(64, 128, 28, 28, "gems", "gem.png"))
+        gemlayout[3].append(Item(114, 128, 28, 28, "gems", "gem.png"))
+        gemlayout[3].append(Item(320, 128, 28, 28, "gems", "gem.png"))
+        gemlayout[3].append(Item(384, 128, 28, 28, "gems", "gem.png"))
         layouts[3].append(Obstacle(256, 32, 32, 32, "wall.png", "still", "wall"))
         layouts[3].append(Obstacle(256, 0, 32, 32, "wall.png", "still", "wall"))
-        layouts[3].append(Obstacle(224, 32, 32, 32, "wall.png", "still", "wall")) 
+        layouts[3].append(Obstacle(224, 32, 32, 32, "wall.png", "still", "wall"))
         layouts[3].append(Obstacle(224, 0, 32, 32, "wall.png", "still", "wall")) 
 
         enemies[3].append(Obstacle(210, 0, 64, 32, "greenaligo0.png", "movingenemy", "aligo"))
@@ -149,10 +149,10 @@ class Map(object):
         layouts[4].append(Obstacle(64, 32, 32, 32, "wall.png", "still", "wall")) 
         chestlayout[4] = Item(32, -32, 32, 32, "smallTreasure", "yellow.png")
 
-        gemlayout[4].append(Item(32,100,28,28,"gems","gem.png"))
-        gemlayout[4].append(Item(128,100,28,28,"gems","gem.png"))
-        gemlayout[4].append(Item(448,100,28,28,"gems","gem.png"))
-        gemlayout[4].append(Item(352,100,28,28,"gems","gem.png"))
+        gemlayout[4].append(Item(32, 100, 28, 28, "gems", "gem.png"))
+        gemlayout[4].append(Item(128, 100, 28, 28, "gems", "gem.png"))
+        gemlayout[4].append(Item(448, 100, 28, 28, "gems", "gem.png"))
+        gemlayout[4].append(Item(352, 100, 28, 28, "gems", "gem.png"))
 
         enemies[4].append(Obstacle(210, 0, 64, 32, "greenaligo0,png", "movingenemy", "aligo"))
         enemies[4].append(Obstacle(400, 185, 64, 32, "greenaligo0.png", "movingenemy", "aligo"))
@@ -161,13 +161,13 @@ class Map(object):
 
         number = -1 
         prev = -1 
-        for j in range(0,7):
-            number = random.randint(0,4)
+        for j in range(0, 7):
+            number = random.randint(0, 4)
             treasures.append(Item(chestlayout[number].x, chestlayout[number].y + 448 * j + 640, chestlayout[number].width, chestlayout[number].height, "smallTreasure", "yellow.png")) 
             for i in layouts[number]:
                 obstacles.append(Obstacle(i.x, i.y + 448 * j + 640, i.width, i.height, "wall.png", "still", "wall")) 
             for i in enemies[number]:
-                obstacles.append(Obstacle(i.x, i.y + 448 * j + 640, i.width, i.height, i.src, i.movetype, i.type)) 
+                obstacles.append(Obstacle(i.x, i.y + 448 * j + 640, i.width, i.height, i.src, i.movetype, i.type))
             for i in gemlayout[number]:
                 gems.append(Item(i.x, i.y + 448 * j + 640, i.width, i.height, "gems", "gem.png"))
 
@@ -192,6 +192,6 @@ class Map(object):
         obstacles.append(Obstacle(210, (background.height-200), 64, 32, "greenaligo0.png", "movingenemy", "aligo")) 
         obstacles.append(Obstacle(210, (background.height-350), 64, 32, "turtle0.png", "movingenemy", "turtle")) 
 
-        for i in range(0,16):
+        for i in range(0, 16):
             obstacles.append(Obstacle(i * 32, (background.height - 32), 32, 32, "wall.png", "still", "wall")) 
-        treasures.append(Item(224, (background.height - 96), 64, 64, "bigTreasure", "yellow.png")) 
+        treasures.append(Item(224, (background.height - 96), 64, 64, "bigTreasure", "yellow.png"))
